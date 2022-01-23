@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 networks:
   laravel:
@@ -13,9 +13,9 @@ services:
         - GID=${GID:-1000}
     container_name: nginx
     ports:
-      - 80:80
+      - 8000:80
     volumes:
-      - ./src:/var/www/html:delegated
+      - ./backend:/var/www/html:delegated
     depends_on:
       - php
       - redis
@@ -25,21 +25,21 @@ services:
       - laravel
 
   mysql:
-    image: mariadb:10.6
+    image: mysql:8.0.28
     container_name: mysql
     restart: unless-stopped
     tty: true
     ports:
-      - 3306:3306
+      - 6033:3306
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      - MYSQL_DATABASE=crm
+      - MYSQL_USER=crm
+      - MYSQL_PASSWORD=2131-z%Z
+      - MYSQL_ROOT_PASSWORD=2131-z%Z
     networks:
       - laravel
+    volumes:
+      - ./mysql:/var/lib/mysql
 
   php:
     build:
@@ -50,7 +50,7 @@ services:
         - GID=${GID:-1000}
     container_name: php
     volumes:
-      - ./src:/var/www/html:delegated
+      - ./backend:/var/www/html:delegated
     networks:
       - laravel
 
@@ -72,7 +72,7 @@ services:
         - GID=${GID:-1000}
     container_name: composer
     volumes:
-      - ./src:/var/www/html
+      - ./backend:/var/www/html
     working_dir: /var/www/html
     depends_on:
       - php
@@ -81,16 +81,16 @@ services:
     networks:
       - laravel
 
-  npm:
-    image: node:13.7
-    container_name: npm
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
     volumes:
-      - ./src:/var/www/html
+      - ./frontend:/var/www/html
     ports:
       - 3000:3000
-      - 3001:3001
     working_dir: /var/www/html
-    entrypoint: ['npm']
     networks:
       - laravel
 
@@ -103,7 +103,7 @@ services:
         - GID=${GID:-1000}
     container_name: artisan
     volumes:
-      - ./src:/var/www/html:delegated
+      - ./backend:/var/www/html:delegated
     depends_on:
       - mysql
     working_dir: /var/www/html
@@ -117,5 +117,25 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
+    networks:
+      - laravel
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - mysql
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysql
+      - PMA_USER=crm
+      - PMA_PASSWORD=2131-z%Z
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - mysql
     networks:
       - laravel
