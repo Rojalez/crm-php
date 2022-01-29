@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\V1\TimeTracker;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateOrUpdateTaskRequest;
 use Illuminate\Http\Request;
 
 use App\Models\Task;
+use App\Http\Resources\Api\V1\TimeTracker\TaskResource;
 
 class TaskController extends Controller
 {
@@ -16,7 +18,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = TaskResource::collection(Task::all());
 
         return $tasks;
     }
@@ -27,7 +29,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateOrUpdateTaskRequest $request)
     {
         $task = Task::create([
             'title' => $request->title,
@@ -36,7 +38,7 @@ class TaskController extends Controller
             'user_id' => $request->user_id,
         ]);
 
-        return json_encode($task);
+        return new TaskResource($task);
     }
 
     /**
@@ -49,7 +51,7 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        return $task;
+        return new TaskResource($task);
     }
 
     /**
@@ -59,7 +61,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateOrUpdateTaskRequest $request, $id)
     {
         $task = Task::findOrFail($id);
         $task->title = $request->title;
@@ -68,7 +70,7 @@ class TaskController extends Controller
         $task->executor_id = $request->executor_id;
         $task->save();
 
-        return $task;
+        return new TaskResource($task);;
     }
 
     /**
