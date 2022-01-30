@@ -20,6 +20,7 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'text' => $this->text,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'author' => new UserResource($this->author),
             'executor' => new UserResource($this->executor),

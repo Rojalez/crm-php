@@ -27,6 +27,7 @@ class CreateOrUpdateTaskRequest extends FormRequest
             'title' => 'required|string|max:255',
             'text' => 'required|min:60',
             'executor_id' => 'required|integer|max:11',
+            'status' => 'nullable|string|max:255',
         ];
     }
 }
