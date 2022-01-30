@@ -9,6 +9,7 @@ import useToken from '../../hooks/useToken';
 import Header from '../Header/Header';
 import Profile from '../Profile/Profile';
 import Plan from '../Plan/Plan';
+import PlanPage from '../Plan/PlanPage/PlanPage';
 // import "react-widgets/styles.css";
 // import DropdownList from "react-widgets/DropdownList";
 export default function App() {
@@ -34,8 +35,13 @@ export default function App() {
             {/* <DropdownList /> */}
             
                 <Routes>
-                    <Route path="/" element={<Tracker/>} />
-                    <Route path="/plan" element={<Plan/>} />
+                    <Route path="/"  element={<Tracker/>} />
+                    <Route path="/plan/" element={<Plan/>} /> 
+
+                    <Route path={"plan/plan-page/:id"} element={<PlanPage/>} />
+                    
+         
+                    
                     <Route path="/profile" element={<Profile/>} />
                 </Routes>
             </div>
