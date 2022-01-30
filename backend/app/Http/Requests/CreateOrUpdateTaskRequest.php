@@ -26,7 +26,6 @@ class CreateOrUpdateTaskRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'text' => 'required|min:60',
-            'user_id' => 'required|integer|max:11',
             'executor_id' => 'required|integer|max:11',
         ];
     }
