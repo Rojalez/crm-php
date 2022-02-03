@@ -15,4 +15,14 @@ class Task extends Model
         'user_id',
         'executor_id',
     ];
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function executor()
+    {
+        return $this->belongsTo(User::class, 'executor_id', 'id');
+    }
 }

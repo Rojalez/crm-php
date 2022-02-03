@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\V1\TimeTracker;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\TimeTracker\UserRequest;
+
+use App\Http\Requests\Api\V1\TimeTracker\UserCreateOrUpdateRequest;
 use App\Http\Resources\Api\V1\TimeTracker\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
+use function bcrypt;
+
 
 class UserController extends Controller
 {
@@ -26,9 +28,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(UserCreateOrUpdateRequest $request)
     {
-        $user = User::create($request->validated());
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
 
         return new UserResource($user);
     }
@@ -51,9 +57,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserCreateOrUpdateRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return new UserResource($user);
     }
 
     /**
@@ -64,6 +76,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return ['success'];
     }
 }

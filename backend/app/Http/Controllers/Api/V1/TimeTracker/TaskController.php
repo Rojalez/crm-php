@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api\V1\TimeTracker;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Api\V1\TimeTracker\CreateOrUpdateTaskRequest;
-use App\Http\Resources\Api\V1\TimeTracker\TaskResource;
 use App\Models\Task;
+use App\Http\Resources\Api\V1\TimeTracker\TaskResource;
 
 class TaskController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -33,10 +35,10 @@ class TaskController extends Controller
             'title' => $request->title,
             'executor_id' => $request->executor_id,
             'text' => $request->text,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user()->id,
         ]);
 
-        return json_encode($task);
+        return new TaskResource($task);
     }
 
     /**
@@ -49,7 +51,7 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        return $task;
+        return new TaskResource($task);
     }
 
     /**
@@ -68,7 +70,7 @@ class TaskController extends Controller
         $task->executor_id = $request->executor_id;
         $task->save();
 
-        return $task;
+        return new TaskResource($task);;
     }
 
     /**
