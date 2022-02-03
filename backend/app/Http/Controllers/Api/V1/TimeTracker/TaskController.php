@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1\TimeTracker;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
+use App\Http\Requests\Api\V1\TimeTracker\CreateOrUpdateTaskRequest;
+use App\Http\Resources\Api\V1\TimeTracker\TaskResource;
 use App\Models\Task;
 
 class TaskController extends Controller
@@ -16,7 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = TaskResource::collection(Task::all());
 
         return $tasks;
     }
@@ -27,7 +27,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateOrUpdateTaskRequest $request)
     {
         $task = Task::create([
             'title' => $request->title,
@@ -59,7 +59,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateOrUpdateTaskRequest $request, $id)
     {
         $task = Task::findOrFail($id);
         $task->title = $request->title;

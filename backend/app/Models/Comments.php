@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Comments extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'title',
-        'text',
         'user_id',
-        'executor_id',
+        'comments',
+        'task_id',
     ];
 }

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\V1\TimeTracker;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\TimeTracker\UserRequest;
-use App\Http\Resources\Api\V1\TimeTracker\UserResource;
-use App\Models\User;
+use App\Http\Resources\Api\V1\TimeTracker\TaskResource;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::all());
+        $comments = TaskResource::collection(Task::all());
+
+        return $comments;
     }
 
     /**
@@ -26,11 +27,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        $user = User::create($request->validated());
-
-        return new UserResource($user);
+        //
     }
 
     /**
@@ -41,7 +40,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return new UserResource(User::findOrFail($id));
+        //
     }
 
     /**
