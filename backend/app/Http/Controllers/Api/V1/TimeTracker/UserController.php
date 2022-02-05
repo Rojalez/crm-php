@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\V1\TimeTracker;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserCreateOrUpdateRequest;
-use App\Http\Requests\UserUpdateRequest;
+
+use App\Http\Requests\Api\V1\TimeTracker\UserCreateOrUpdateRequest;
 use App\Http\Resources\Api\V1\TimeTracker\UserResource;
-use Illuminate\Http\Request;
 use App\Models\User;
 use function bcrypt;
+
 
 class UserController extends Controller
 {

@@ -13,7 +13,7 @@ class Task extends Model
         'title',
         'text',
         'user_id',
-        'executor_id'
+        'executor_id',
     ];
 
     public function author()
