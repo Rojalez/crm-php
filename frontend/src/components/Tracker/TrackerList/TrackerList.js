@@ -2,7 +2,7 @@ import React from "react";
 import TrackerListItem from '../../Tracker/TrackerListItem/TrackerListItem';
 
 const TrackerList = ({ time, tracker_list, onRemove }) => {
-    if (tracker_list == '') {
+    if (tracker_list === '') {
         return <div className="dark:bg-grey-800 dark:text-white bg-grey-200 text-center p-20 transition-all duration-150 rounded-md min-h-full">Трекер пуст</div>
     }
     return(
@@ -14,7 +14,6 @@ const TrackerList = ({ time, tracker_list, onRemove }) => {
                         item={item} 
                         onRemove={onRemove}
                         time={time}
-
                     />
                 ))}
             </ul>

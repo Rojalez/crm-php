@@ -7,7 +7,8 @@ import { useLocalStorage } from '../../../hooks/useLocalStorage';
 export default function TrackerContent() {
     const [tracker_list, setList] = useLocalStorage('tracker_list', []);
     const [task, setTask] = useState('');
-    const [time, setTime] = useState("00:00:00");
+    const [time] = useState("00:00:00");
+    
     function handleChange(event) {
         setTask(event.target.value);
       }

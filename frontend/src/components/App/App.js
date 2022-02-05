@@ -10,8 +10,7 @@ import Header from '../Header/Header';
 import Profile from '../Profile/Profile';
 import Plan from '../Plan/Plan';
 import PlanPage from '../Plan/PlanPage/PlanPage';
-// import "react-widgets/styles.css";
-// import DropdownList from "react-widgets/DropdownList";
+
 export default function App() {
   const { token, setToken } = useToken();
 
@@ -33,7 +32,6 @@ export default function App() {
               <Sidebar/>
             <div className='w-full px-6 '>
             {/* <DropdownList /> */}
-            
                 <Routes>
                     <Route path="/"  element={<Tracker/>} />
                     <Route path="/plan/" element={<Plan/>} /> 

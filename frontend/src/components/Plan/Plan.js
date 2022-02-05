@@ -1,8 +1,12 @@
 import React from "react";
-import PlanContent from '../Plan/PlanContent/PlanContent';
-const Plan = () => {
+import PlanList from './PlanList/PlanList';
+
+
+const Plan = () => {   
     return(
-       <PlanContent />
+        <>
+        <PlanList />
+        </> 
     )
 }
 

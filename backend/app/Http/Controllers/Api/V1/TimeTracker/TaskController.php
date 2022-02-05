@@ -35,7 +35,7 @@ class TaskController extends Controller
             'title' => $request->title,
             'executor_id' => $request->executor_id,
             'text' => $request->text,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user()->id,
         ]);
 
         return new TaskResource($task);

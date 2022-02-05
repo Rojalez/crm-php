@@ -13,7 +13,7 @@ export default function Profile() {
         async function fetchData() {
           setIsLoading(true);
           try {
-            const response = await fetch('http://localhost:8000/api/v1/user', {
+            const response = await fetch('http://localhost:8000/api/v1/time-tracker/user', {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
