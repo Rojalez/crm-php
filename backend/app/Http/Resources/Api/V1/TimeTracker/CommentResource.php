@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\V1\TimeTracker;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreateOrUpdateCommentsResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

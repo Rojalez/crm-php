@@ -24,7 +24,7 @@ class CreateOrUpdateCommentsRequest extends FormRequest
     public function rules()
     {
         return [
-                 'comments'=>'required|min:15',
+                 'comment'=>'required',
                  'task_id'=>'required|integer|max:11',
         ];
     }
