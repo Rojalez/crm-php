@@ -23,6 +23,7 @@ Route::middleware('auth:api')->group(function () {
             'user' => \TimeTracker\UserController::class,
             'task' => \TimeTracker\TaskController::class,
             'comment' => \TimeTracker\CommentController::class,
+            'timer'=>\TimeTracker\TimerController::class,
         ]);
     });
 });

@@ -4,7 +4,7 @@ FROM node:17.3.1
 WORKDIR /var/www/html
 
 # add app
-COPY . /var/www/html
+COPY src /var/www/html
 EXPOSE 3000
 # start app
 CMD ["npm", "start"]
