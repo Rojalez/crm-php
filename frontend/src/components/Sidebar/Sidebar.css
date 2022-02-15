@@ -1,6 +1,0 @@
-
-.active::after{
-    float: right;
-    content: "•";
-    color: rgb(71, 223, 71);
-  }

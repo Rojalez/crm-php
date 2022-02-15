@@ -4,10 +4,6 @@ namespace App\Http\Resources\Api\V1\TimeTracker;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use App\Models\Task;
-use App\Http\Resources\Api\V1\TimeTracker\UserResource;
-
-
 class TaskResource extends JsonResource
 {
     /**
@@ -26,6 +22,7 @@ class TaskResource extends JsonResource
             'created_at' => $this->created_at,
             'author' => new UserResource($this->author),
             'executor' => new UserResource($this->executor),
+            'comments'=> CommentResource::collection($this->comments),
         ];
     }
 }

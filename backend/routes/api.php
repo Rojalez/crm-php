@@ -22,6 +22,8 @@ Route::middleware('auth:api')->group(function () {
         Route::apiResources([
             'user' => \TimeTracker\UserController::class,
             'task' => \TimeTracker\TaskController::class,
+            'comment' => \TimeTracker\CommentController::class,
+            'timer'=>\TimeTracker\TimerController::class,
         ]);
     });
 });

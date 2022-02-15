@@ -1,6 +1,7 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+	"./node_modules/flowbite/**/*.js"
   ],
   darkMode: 'class',
   theme: {
@@ -285,9 +286,11 @@ module.exports = {
 	"gray-apple": "#000000CC",
     },
   },
-  plugins: [],
+  	plugins: [
+	require('flowbite/plugin')
+	],
   // prefix: 'wh-',
   corePlugins: {
-    preflight: false,
+    preflight: true,
   }
 }
