@@ -42,7 +42,6 @@ const TaskPage = () => {
     const [fetchComments, isCommentsLoading] = useFetching(async (id) => {
         const response = await getComments(id, header)
         setComments(response.data.comments)
-        console.log(response.data.comments)
     })
 
     const changeTask = (e) => {
@@ -103,12 +102,14 @@ const TaskPage = () => {
                 <div className="p-8">
                     <div className="p-2 w-max dark:text-gray-300 rounded-t-lg text-gray-800 text-xs bg-gray-200 dark:bg-gray-800">Комментарии</div>
                     <div className="bg-gray-200 dark:bg-gray-800 shadow-md w-full p-4 flex flex-col space-y-2 rounded-tl-none rounded-lg">
-                        {!comments.length 
+                        {isCommentsLoading
+                            ? <Skeleton enableAnimation={false} count={5} className="h-full dark:bg-gray-700 animate-pulse"/>
+                            : !comments.length 
                             ? <div className="dark:text-white text-xs text-gray-600 text-center py-16">Комментариев нет</div>
                             : comments.map(comment => (
                             <div key={comment.id} className="block relative p-2.5 w-full space-y-4 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 rounded-lg dark:text-white">
                                 <div className="flex flex-row text-xs space-x-2">
-                                    <span>{comment.id}</span>
+                                    <span>Имя пользователя {comment.user_id}</span>
                                     <span>{comment.created_at}</span>
                                 </div>
                                 <div className="text-sm w-10/12">
@@ -120,6 +121,7 @@ const TaskPage = () => {
                                 </div>
                             </div>
                         ))}
+                        
                         
                         
                     </div>         
