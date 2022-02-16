@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import MyButton from "../UI/button/MyButton";
 import { useFetching } from "../../hooks/useFetching";
 import useHeader from "../../hooks/useHeader";
-import { getComments, postComment } from "../../API/TaskService";
-import { useParams } from "react-router-dom";
+import { postComment } from "../../API/TaskService";
 const CommentForm = ({comments, setComments, task_id}) => {
     const [comment, setComment] = useState({
-        task_id: '1',
+        task_id: '691',
         comment: ''
     })
     const header = useHeader()
@@ -23,7 +22,7 @@ const CommentForm = ({comments, setComments, task_id}) => {
         };
         addComment(newComment)
         setComment({
-            task_id: '1',
+            task_id: '691',
             comment: ''
             
         });

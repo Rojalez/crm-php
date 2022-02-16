@@ -7,8 +7,7 @@ const TaskForm = ({users, fetchTask, isPostTaskLoading}) => {
     const [task, setTask] = useState({
         title: '', 
         text: '', 
-        executor_id: '', 
-        user_id: ''
+        executor_id: ''
     })
 
     const addNewTask = (e) => {
@@ -20,8 +19,7 @@ const TaskForm = ({users, fetchTask, isPostTaskLoading}) => {
         setTask({
             title: '', 
             text: '', 
-            executor_id: '', 
-            user_id: ''
+            executor_id: ''
         });
     }
 
@@ -42,14 +40,6 @@ const TaskForm = ({users, fetchTask, isPostTaskLoading}) => {
                         value={task.executor_id}
                         onChange={e => setTask({...task, executor_id: e.target.value})}
                         defaultValue="Исполнитель">
-                        {users.map(user => (
-                            <option key={user.id} value={user.id}>{user.name}</option>
-                        ))}
-                    </MySelect>
-                    <MySelect 
-                        value={task.user_id}
-                        onChange={e => setTask({...task, user_id: e.target.value})}
-                        defaultValue="Автор">
                         {users.map(user => (
                             <option key={user.id} value={user.id}>{user.name}</option>
                         ))}
