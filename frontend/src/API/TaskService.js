@@ -16,14 +16,6 @@ const BASE_URL = "http://localhost:8000/api/v1/time-tracker/"
             })
             return response.json()
         }
-        
-        export async function getUsers(header) {
-            const response = await axios.get(`${BASE_URL}user`, {
-                headers: header
-            })
-            return response.data
-        }
-    
         export async function getById(id, header) {
             const response = await axios.get(`${BASE_URL}task/${id}`, {
                 headers: header

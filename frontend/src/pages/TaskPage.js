@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {useFetching} from "../hooks/useFetching";
-import {getById, updateById, getUsers} from "../API/TaskService";
+import {getById, updateById} from "../API/TaskService";
 import Moment from 'react-moment';
 import MyButton from "../components/UI/button/MyButton";
 import useHeader from '../hooks/useHeader';
@@ -10,10 +10,11 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import MyInput from "../components/UI/input/MyInput";
 import MySelect from '../components/UI/select/MySelect'
 import MyModal from "../components/UI/MyModal";
-
+import { useLocation } from 'react-router-dom'
 const TaskPage = () => {
+    const location = useLocation()
+    const users = location.state
     const params = useParams()
-    const [users, setUsers] = useState([]);
     const [modal, setModal] = useState(false)
     const [task, setTask] = useState({
         title: '', 
@@ -30,11 +31,6 @@ const TaskPage = () => {
         const response = await getById(id, header);
         setTask(response.data);
     });
-
-    const [fetchUsers] = useFetching(async () => {
-        const response = await getUsers(header)
-        setUsers(response.data)
-    })
 
     const [updateTaskById] = useFetching(async (data) => {
         const response = await updateById(id, header, data )
@@ -53,7 +49,6 @@ const TaskPage = () => {
 
     useEffect(() => {
         fetchTaskById(params.id)
-        fetchUsers(users)
     }, [])
 
     return (
@@ -111,11 +106,15 @@ const TaskPage = () => {
                                 <span>Username</span>
                                 <span>12/12/2012</span>
                             </div>
-                            <div className="text-sm">
-                                Comment block
+                            <div className="text-sm w-10/12">
+                                {users.map(user=>(
+                                    <div key={user.id}>{user.id}-{user.name}</div>
+                                ))}
                             </div>
-                            <button className="absolute dark:bg-gray-600 py-1 px-2 -top-3 right-2 text-sm rounded-lg"><i className="fal fa-trash-alt"></i></button>
-                            <button className="absolute dark:bg-gray-600 py-1 px-2 -top-3 right-10 text-sm rounded-lg"><i className="fal fa-pen-alt"></i></button>
+                           <div className="absolute right-2 top-0">
+                                <MyButton><i className="fal fa-trash-alt"></i></MyButton>
+                                <MyButton><i className="fal fa-pen-alt"></i></MyButton>
+                           </div>
                         </div>
                     </div>         
                 </div>
@@ -126,11 +125,6 @@ const TaskPage = () => {
                 <MyInput value={task.title} type="text" onChange={e => setTask({...task, title: e.target.value})}/>
                 <MyInput value={task.text} type="text" onChange={e => setTask({...task, text: e.target.value})}/>
                 <MySelect value={task.executor_id}  onChange={e => setTask({...task, executor_id: e.target.value})} defaultValue="Выберите исполнителя">
-                    {users.map(user => (
-                        <option key={user.id} value={user.id}>{user.name}</option>
-                    ))}
-                </MySelect>
-                <MySelect value={task.user_id} onChange={e => setTask({...task, user_id: e.target.value})} defaultValue="Выберите автора">
                     {users.map(user => (
                         <option key={user.id} value={user.id}>{user.name}</option>
                     ))}

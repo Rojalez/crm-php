@@ -1,6 +1,6 @@
 import React from "react";
 import TaskItem from "./TaskItem";
-const TaskList = ({tasks, delTask, isDeleting}) => {
+const TaskList = ({tasks, delTask, isDeleting, users}) => {
     return (  
         <div className="inline-block py-2 min-w-full">
             <div className="overflow-hidden shadow-md sm:rounded-lg">
@@ -32,7 +32,7 @@ const TaskList = ({tasks, delTask, isDeleting}) => {
                     </thead>
                     <tbody>
                     {tasks?.map((task) => ( 
-                        <TaskItem delTask={delTask} key={task.id} task={task}/>
+                        <TaskItem delTask={delTask} key={task.id} users={users} task={task}/>
                     ))}
                     </tbody>
                 </table>

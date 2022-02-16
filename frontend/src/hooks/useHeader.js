@@ -1,5 +1,4 @@
 import useToken from "./useToken"
-
 function useHeader() {
     const {token} = useToken();
     return {
