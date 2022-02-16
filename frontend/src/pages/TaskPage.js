@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {useFetching} from "../hooks/useFetching";
-import {getById, updateById, getComments, delCommentById} from "../API/TaskService";
+import {getById, updateById, getComments, delComment} from "../API/TaskService";
 import Moment from 'react-moment';
 import MyButton from "../components/UI/button/MyButton";
 import useHeader from '../hooks/useHeader';
@@ -25,7 +25,6 @@ const TaskPage = () => {
         user_id: '' 
     })
     const [comments, setComments] = useState([])
-
     const id = task.id
     const router = useNavigate()
     const header = useHeader()
@@ -45,10 +44,12 @@ const TaskPage = () => {
         setComments(response.data.comments)
     })
 
-    const [delComment, isDeleting] = useFetching(async (id) => {
-        await delCommentById(id, header)
-        fetchComments();
+    const [deleteComment] = useFetching(async (id) => {
+        await delComment(id, header)
+        fetchComments(params.id);
     })
+
+
 
     const changeTask = (e) => {
         e.preventDefault();
@@ -104,7 +105,7 @@ const TaskPage = () => {
                         </div>
                     </div>
                 </div>
-                <CommentForm comments={comments} setComments={setComments}/>
+                <CommentForm task_id={id} comments={comments} fetchComments={fetchComments} setComments={setComments}/>
                 <div className="p-8">
                     <div className="p-2 w-max dark:text-gray-300 rounded-t-lg text-gray-800 text-xs bg-gray-200 dark:bg-gray-800">Комментарии</div>
                     <div className="bg-gray-200 dark:bg-gray-800 shadow-md w-full p-4 flex flex-col space-y-2 rounded-tl-none rounded-lg">
@@ -115,15 +116,15 @@ const TaskPage = () => {
                             : comments.map(comment => (
                             <div key={comment.id} className="block relative p-2.5 w-full space-y-4 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 rounded-lg dark:text-white">
                                 <div className="flex flex-row text-xs space-x-2">
-                                    <span>Имя пользователя {comment.user_id}</span>
-                                    <span>{comment.created_at}</span>
+                                    <span>{comment.id}</span>
+                                    <span><Moment format="HH:mm:ss DD.MM.YY">{comment.created_at}</Moment></span>
                                 </div>
                                 <div className="text-sm w-10/12">
                                     {comment.comment}
                                 </div>
                                 <div className="absolute right-2 top-0">
-                                        <MyButton onClick={() => delComment(comment.id)}><i className="fal fa-trash-alt"></i></MyButton>
-                                        <MyButton><i className="fal fa-pen-alt"></i></MyButton>
+                                    <MyButton onClick={() => deleteComment(comment.id)}><i className="fal fa-trash-alt"></i></MyButton>
+                                    <MyButton><i className="fal fa-pen-alt"></i></MyButton>
                                 </div>
                             </div>
                         ))}
