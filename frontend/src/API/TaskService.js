@@ -52,3 +52,10 @@ const BASE_URL = "http://localhost:8000/api/v1/time-tracker/"
             return response.json()
         }
 
+        export async function delCommentById(id, header) {
+            await axios.delete(`${BASE_URL}task/${id}`, {
+               headers: header
+            })
+        }
+
+

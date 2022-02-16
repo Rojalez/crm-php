@@ -11,6 +11,9 @@ const TaskItem = ({task, delTask, users}) => {
                 {task.executor.name}
             </td>
             <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                {task.status}
+            </td>
+            <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                 <Moment format="HH:mm:ss DD.MM.YY">{task.created_at}</Moment>
             </td>
             <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">

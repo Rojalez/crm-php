@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {useFetching} from "../hooks/useFetching";
-import {getById, updateById, getComments} from "../API/TaskService";
+import {getById, updateById, getComments, delCommentById} from "../API/TaskService";
 import Moment from 'react-moment';
 import MyButton from "../components/UI/button/MyButton";
 import useHeader from '../hooks/useHeader';
@@ -20,6 +20,7 @@ const TaskPage = () => {
     const [task, setTask] = useState({
         title: '', 
         text: '',
+        status: '',
         executor_id: '',
         user_id: '' 
     })
@@ -42,6 +43,11 @@ const TaskPage = () => {
     const [fetchComments, isCommentsLoading] = useFetching(async (id) => {
         const response = await getComments(id, header)
         setComments(response.data.comments)
+    })
+
+    const [delComment, isDeleting] = useFetching(async (id) => {
+        await delCommentById(id, header)
+        fetchComments();
     })
 
     const changeTask = (e) => {
@@ -116,14 +122,11 @@ const TaskPage = () => {
                                     {comment.comment}
                                 </div>
                                 <div className="absolute right-2 top-0">
-                                        <MyButton><i className="fal fa-trash-alt"></i></MyButton>
+                                        <MyButton onClick={() => delComment(comment.id)}><i className="fal fa-trash-alt"></i></MyButton>
                                         <MyButton><i className="fal fa-pen-alt"></i></MyButton>
                                 </div>
                             </div>
                         ))}
-                        
-                        
-                        
                     </div>         
                 </div>
             </>
@@ -132,6 +135,11 @@ const TaskPage = () => {
             <form className="p-6 space-y-6">
                 <MyInput value={task.title} type="text" onChange={e => setTask({...task, title: e.target.value})}/>
                 <MyInput value={task.text} type="text" onChange={e => setTask({...task, text: e.target.value})}/>
+                <MySelect value={task.status}  onChange={e => setTask({...task, status: e.target.value})} defaultValue="Выберите статус">
+                    {/* {users.map(user => (
+                        <option key={user.id} value={user.id}>{user.name}</option>
+                    ))} */}
+                </MySelect>
                 <MySelect value={task.executor_id}  onChange={e => setTask({...task, executor_id: e.target.value})} defaultValue="Выберите исполнителя">
                     {users.map(user => (
                         <option key={user.id} value={user.id}>{user.name}</option>
