@@ -20,7 +20,6 @@ const BASE_URL = "http://localhost:8000/api/v1/time-tracker/"
             const response = await axios.get(`${BASE_URL}task/${id}`, {
                 headers: header
             })
-
             return response.data
         }
         export async function delById(id, header) {
@@ -37,4 +36,19 @@ const BASE_URL = "http://localhost:8000/api/v1/time-tracker/"
             return response.data
         }
 
+        export async function getComments(id, header) {
+            const response = await axios.get(`${BASE_URL}task/${id}`, {
+                headers: header 
+            })
+            return response.data
+        }
+
+        export async function postComment(id, data, header) {
+            const response = await fetch(`${BASE_URL}task/${id}`, {
+                method: 'POST',
+                headers: header,
+                body: JSON.stringify(data)
+            })
+            return response.json()
+        }
 

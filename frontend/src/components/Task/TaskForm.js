@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import MyButton from "../components/UI/button/MyButton";
-import MyInput from "../components/UI/input/MyInput";
-import MySelect from "../components/UI/select/MySelect";
+import MyButton from "../UI/button/MyButton";
+import MyInput from "../UI/input/MyInput";
+import MySelect from "../UI/select/MySelect";
 const TaskForm = ({users, fetchTask, isPostTaskLoading}) => {
 
     const [task, setTask] = useState({

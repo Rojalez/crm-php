@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {useFetching} from "../hooks/useFetching";
-import {getById, updateById} from "../API/TaskService";
+import {getById, updateById, getComments} from "../API/TaskService";
 import Moment from 'react-moment';
 import MyButton from "../components/UI/button/MyButton";
 import useHeader from '../hooks/useHeader';
@@ -11,6 +11,7 @@ import MyInput from "../components/UI/input/MyInput";
 import MySelect from '../components/UI/select/MySelect'
 import MyModal from "../components/UI/MyModal";
 import { useLocation } from 'react-router-dom'
+import CommentForm from "../components/Comment/CommentForm";
 const TaskPage = () => {
     const location = useLocation()
     const users = location.state
@@ -22,6 +23,7 @@ const TaskPage = () => {
         executor_id: '',
         user_id: '' 
     })
+    const [comments, setComments] = useState([])
 
     const id = task.id
     const router = useNavigate()
@@ -37,6 +39,11 @@ const TaskPage = () => {
         setTask([...task, response.data])
         fetchTaskById(id)
     })
+    const [fetchComments, isCommentsLoading] = useFetching(async (id) => {
+        const response = await getComments(id, header)
+        setComments(response.data.comments)
+        console.log(response.data.comments)
+    })
 
     const changeTask = (e) => {
         e.preventDefault();
@@ -49,6 +56,7 @@ const TaskPage = () => {
 
     useEffect(() => {
         fetchTaskById(params.id)
+        fetchComments(params.id)
     }, [])
 
     return (
@@ -91,31 +99,29 @@ const TaskPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="px-8">
-                    <div className="bg-gray-200 dark:bg-gray-800 shadow-md relative w-full p-4 flex flex-col space-y-2 rounded-lg">
-                        <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 rounded-lg border-0 focus:border-none focus:ring-0 focus:outline-none dark:placeholder-gray-400 dark:text-white" 
-                            placeholder="Ваш комментарий...">
-                        </textarea>
-                    </div>
-                </div>
+                <CommentForm comments={comments} setComments={setComments}/>
                 <div className="p-8">
-                    <p className="p-2 w-max dark:text-gray-300 rounded-t-lg text-gray-800 text-xs bg-gray-200 dark:bg-gray-800">Комментарии</p>
+                    <div className="p-2 w-max dark:text-gray-300 rounded-t-lg text-gray-800 text-xs bg-gray-200 dark:bg-gray-800">Комментарии</div>
                     <div className="bg-gray-200 dark:bg-gray-800 shadow-md w-full p-4 flex flex-col space-y-2 rounded-tl-none rounded-lg">
-                        <div className="block relative p-2.5 w-full space-y-4 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 rounded-lg dark:text-white">
-                            <div className="flex flex-row text-xs space-x-2">
-                                <span>Username</span>
-                                <span>12/12/2012</span>
+                        {!comments.length 
+                            ? <div className="dark:text-white text-xs text-gray-600 text-center py-16">Комментариев нет</div>
+                            : comments.map(comment => (
+                            <div key={comment.id} className="block relative p-2.5 w-full space-y-4 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 rounded-lg dark:text-white">
+                                <div className="flex flex-row text-xs space-x-2">
+                                    <span>{comment.id}</span>
+                                    <span>{comment.created_at}</span>
+                                </div>
+                                <div className="text-sm w-10/12">
+                                    {comment.comment}
+                                </div>
+                                <div className="absolute right-2 top-0">
+                                        <MyButton><i className="fal fa-trash-alt"></i></MyButton>
+                                        <MyButton><i className="fal fa-pen-alt"></i></MyButton>
+                                </div>
                             </div>
-                            <div className="text-sm w-10/12">
-                                {users.map(user=>(
-                                    <div key={user.id}>{user.id}-{user.name}</div>
-                                ))}
-                            </div>
-                           <div className="absolute right-2 top-0">
-                                <MyButton><i className="fal fa-trash-alt"></i></MyButton>
-                                <MyButton><i className="fal fa-pen-alt"></i></MyButton>
-                           </div>
-                        </div>
+                        ))}
+                        
+                        
                     </div>         
                 </div>
             </>

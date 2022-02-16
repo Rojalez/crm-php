@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
-import TaskForm from "../components/TaskForm";
-import TaskList from "../components/TaskList";
+import TaskForm from "../components/Task/TaskForm";
+import TaskList from "../components/Task/TaskList"
 import {getAll, delById, postTask} from "../API/TaskService";
 import { getUsers } from "../API/UserService";
 import { useFetching } from "../hooks/useFetching";
