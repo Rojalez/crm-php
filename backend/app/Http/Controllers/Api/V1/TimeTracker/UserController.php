@@ -81,4 +81,11 @@ class UserController extends Controller
 
         return ['success'];
     }
+
+    public function totalTimes()
+    {
+       
+
+        return new UserResource();
+    }
 }

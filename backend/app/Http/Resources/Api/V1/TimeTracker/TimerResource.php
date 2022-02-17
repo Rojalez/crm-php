@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\V1\TimeTracker;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class TimerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,10 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "email"=> $this->email,
-            "done_tasks"=>TaskListForProfileResource::collection($this->done_tasks()),
-            "queue_tasks"=>TaskListForProfileResource::collection($this->queue_tasks()),
-            ];
+            'id'=>$this->id,
+            'start_time'=>$this->start_time,
+            'stop_time'=>$this->stop_time,
+            'total'=>$this->total,
+        ];
     }
 }

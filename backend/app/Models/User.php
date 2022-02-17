@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function done_tasks () {
+        return $this->hasMany(Task::class, 'executor_id', 'id')->where('status', 'done')->get();
+    }
+
+    public function queue_tasks() {
+        return $this->hasMany(Task::class, 'executor_id','id')->where('status','!=','done')->get();
+    }
+
 }

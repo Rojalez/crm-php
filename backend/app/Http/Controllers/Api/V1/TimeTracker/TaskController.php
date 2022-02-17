@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\TimeTracker\CreateOrUpdateTaskRequest;
 use App\Models\Task;
 use App\Http\Resources\Api\V1\TimeTracker\TaskResource;
+use App\Http\Resources\Api\V1\TimeTracker\TaskListResource;
 
 class TaskController extends Controller
 {
@@ -18,7 +19,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = TaskResource::collection(Task::all());
+        $tasks = TaskListResource::collection(Task::paginate(10));
 
         return $tasks;
     }
@@ -35,6 +36,7 @@ class TaskController extends Controller
             'title' => $request->title,
             'executor_id' => $request->executor_id,
             'text' => $request->text,
+            'status' => 'idea',
             'user_id' => $request->user()->id,
         ]);
 
@@ -68,6 +70,7 @@ class TaskController extends Controller
         $task->text = $request->text;
         $task->user_id = $request->user_id;
         $task->executor_id = $request->executor_id;
+        $task->status=$request->stasus;
         $task->save();
 
         return new TaskResource($task);;

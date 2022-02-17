@@ -19,6 +19,7 @@ Route::post('login', 'Auth\PassportAuthController@login');
 
 Route::middleware('auth:api')->group(function () {
     Route::prefix('time-tracker')->group(function () {
+        Route::get('user/total-times', 'TimeTracker\UserController@totalTimes');
         Route::apiResources([
             'user' => \TimeTracker\UserController::class,
             'task' => \TimeTracker\TaskController::class,
@@ -26,6 +27,7 @@ Route::middleware('auth:api')->group(function () {
             'timer'=>\TimeTracker\TimerController::class,
         ]);
     });
+
 });
 
 
