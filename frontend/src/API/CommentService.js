@@ -18,6 +18,16 @@ export async function postComment(_id, data, header) {
     return response.json()
 }
 
+export async function updateCommentById(id, header, data) {
+    const response = await axios.put(`${BASE_URL}comment/${id}`, data, {
+        headers: header,
+        body: JSON.stringify(data)
+    })
+    console.log(id)
+    return response.data
+}
+
+
 export async function delComment(id, header) {
     await axios.delete(`${BASE_URL}comment/${id}`, {
        headers: header

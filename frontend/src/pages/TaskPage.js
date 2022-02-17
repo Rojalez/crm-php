@@ -12,6 +12,7 @@ import MySelect from '../components/UI/select/MySelect'
 import MyModal from "../components/UI/MyModal";
 import { useLocation } from 'react-router-dom'
 import Comment from "../components/Comment/Comment";
+
 const TaskPage = () => {
     const location = useLocation()
     const users = location.state
@@ -96,7 +97,7 @@ const TaskPage = () => {
             </>
         }
         <MyModal visible={modal} setVisible={setModal}>
-            <form className="p-6 space-y-6">
+           
                 <MyInput value={task.title} type="text" onChange={e => setTask({...task, title: e.target.value})}/>
                 <MyInput value={task.text} type="text" onChange={e => setTask({...task, text: e.target.value})}/>
                 <MySelect value={task.status}  onChange={e => setTask({...task, status: e.target.value})} defaultValue="Выберите статус">
@@ -107,7 +108,6 @@ const TaskPage = () => {
                     ))}
                 </MySelect>
                 <MyButton onClick={changeTask}>Готово</MyButton>
-            </form>
         </MyModal>
         </>
     )
