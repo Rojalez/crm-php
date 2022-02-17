@@ -23,7 +23,6 @@ export async function updateCommentById(id, header, data) {
         headers: header,
         body: JSON.stringify(data)
     })
-    console.log(id)
     return response.data
 }
 

@@ -36,7 +36,7 @@ class TaskController extends Controller
             'title' => $request->title,
             'executor_id' => $request->executor_id,
             'text' => $request->text,
-            'status' => 'idea',
+            'status' => $request->status,
             'user_id' => $request->user()->id,
         ]);
 

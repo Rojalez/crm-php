@@ -10,12 +10,10 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import MyInput from "../components/UI/input/MyInput";
 import MySelect from '../components/UI/select/MySelect'
 import MyModal from "../components/UI/MyModal";
-import { useLocation } from 'react-router-dom'
 import Comment from "../components/Comment/Comment";
-
+import { getUsers } from "../API/UserService";
 const TaskPage = () => {
-    const location = useLocation()
-    const users = location.state
+    const [users, setUsers] = useState([])
     const params = useParams()
     const [modal, setModal] = useState(false)
     const [task, setTask] = useState({
@@ -25,9 +23,13 @@ const TaskPage = () => {
         executor_id: '',
         user_id: '' 
     })
-    const id = task.id
     const router = useNavigate()
     const header = useHeader()
+
+    const [fetchUsers] = useFetching(async () => {
+        const response = await getUsers(header)
+        setUsers(response.data)
+    })
 
     const [fetchTaskById, isLoading, error] = useFetching(async (id) => {
         const response = await getById(id, header);
@@ -35,9 +37,9 @@ const TaskPage = () => {
     });
 
     const [updateTaskById] = useFetching(async (data) => {
-        const response = await updateById(id, header, data )
+        const response = await updateById(params.id, header, data )
         setTask([...task, response.data])
-        fetchTaskById(id)
+        fetchTaskById(params.id)
     })
     
     const changeTask = (e) => {
@@ -51,6 +53,7 @@ const TaskPage = () => {
 
     useEffect(() => {
         fetchTaskById(params.id)
+        fetchUsers(users)
     }, [])
 
     return (
@@ -93,16 +96,14 @@ const TaskPage = () => {
                         </div>
                     </div>
                 </div>
-                <Comment task_id={id}/>
+                <Comment params={params}/>
             </>
         }
-        <MyModal visible={modal} setVisible={setModal}>
-           
+        <MyModal visible={modal} title='Изменение данных таска' setVisible={setModal}>
                 <MyInput value={task.title} type="text" onChange={e => setTask({...task, title: e.target.value})}/>
                 <MyInput value={task.text} type="text" onChange={e => setTask({...task, text: e.target.value})}/>
-                <MySelect value={task.status}  onChange={e => setTask({...task, status: e.target.value})} defaultValue="Выберите статус">
-                </MySelect>
-                <MySelect value={task.executor_id}  onChange={e => setTask({...task, executor_id: e.target.value})} defaultValue="Выберите исполнителя">
+                <MyInput value={task.status} type="text" onChange={e => setTask({...task, status: e.target.value})}/>
+                <MySelect value={task.executor_id} onChange={e => setTask({...task, executor_id: e.target.value})} defaultValue="Выберите исполнителя">
                     {users.map(user => (
                         <option key={user.id} value={user.id}>{user.name}</option>
                     ))}

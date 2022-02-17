@@ -2,7 +2,7 @@ import React from "react"
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import CommentItem from '../Comment/CommentItem'
-const CommentList = ({isCommentsLoading, params, task_id, comments, header, fetchComments}) => {
+const CommentList = ({isCommentsLoading, params, comments, header, fetchComments}) => {
     return (
         <>
         <div className="p-8">
@@ -13,7 +13,7 @@ const CommentList = ({isCommentsLoading, params, task_id, comments, header, fetc
                     : !comments.length 
                     ? <div className="dark:text-white text-xs text-gray-600 text-center py-16">Комментариев нет</div>
                     : comments.map(commentData => (
-                        <CommentItem key={commentData.id} params={params} task_id={task_id} fetchComments={fetchComments} header={header} commentData={commentData}/>
+                        <CommentItem key={commentData.id} params={params} fetchComments={fetchComments} header={header} commentData={commentData}/>
                     ))}
             </div>         
         </div> 

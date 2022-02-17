@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
-const TaskItem = ({task, delTask, users}) => {
+const TaskItem = ({task, delTask}) => {
     return ( 
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <Link state={users}  to={`/tasks/${task.id}`}><span className="text-gray-400 text-xs pr-2">{task.id}</span>{task.title}</Link>                
+            <Link to={`/tasks/${task.id}`}><span className="text-gray-400 text-xs pr-2">{task.id}</span>{task.title}</Link>                
             </td>
             <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                 {task.executor.name}

@@ -5,16 +5,17 @@ import MyInput from "../UI/input/MyInput"
 import MyModal from "../UI/MyModal"
 import { updateCommentById, delComment } from "../../API/CommentService";
 import { useFetching } from "../../hooks/useFetching";
-const CommentItem = ({commentData, header, fetchComments, task_id, params}) => {
+const CommentItem = ({commentData, header, fetchComments, params}) => {
     const [commentModal, setCommentModal] = useState(false)
     const [comment, setComment] = useState({
-        comment: '',
-        task_id: ''
+        comment: commentData.comment,
+        task_id: params.id
     })
-    const [updateComment] = useFetching(async (id, data) => {
+    const id = commentData.id
+    const [updateComment] = useFetching(async ( data) => {
         const response = await updateCommentById(id, header, data )
         setComment([...comment, response.data])
-        fetchComments(task_id)
+        fetchComments(params.id)
     })
 
     const changeComment = (e) => {
@@ -23,6 +24,8 @@ const CommentItem = ({commentData, header, fetchComments, task_id, params}) => {
             ...comment
         };
         updateComment(changedComment)
+        setCommentModal(false)
+        fetchComments(params.id)
     }
     
     const [deleteComment, deleteCommentLoading] = useFetching(async (id) => {
@@ -50,10 +53,10 @@ const CommentItem = ({commentData, header, fetchComments, task_id, params}) => {
                 <MyButton onClick={() => setCommentModal(true)}><i className="fal fa-pen-alt"></i></MyButton>
             </div>
         </div>
-        <MyModal visible={commentModal} setVisible={setCommentModal} >
+        <MyModal visible={commentModal} title="Изменение комментария" setVisible={setCommentModal} >
             <MyInput value={comment.comment} onChange={e => setComment({...comment, comment: e.target.value})} placeholder="Комментарий" type="text"/>
-            <MyInput value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} placeholder="ID задачи" type="text"/>
-            <MyButton onClick={() => [changeComment, setCommentModal(false)]}>Сохранить</MyButton>
+            <MyInput disabled hidden="hidden" value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} placeholder="ID задачи" type="text"/>
+            <MyButton onClick={changeComment}>Сохранить</MyButton>
         </MyModal> 
         </>
     )
