@@ -1,11 +1,12 @@
-import React, {useEffect} from "react"
+import React from "react"
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Moment from "react-moment"
 import MyButton from "../UI/button/MyButton"
-const CommentList = ({isCommentsLoading, comments, deleteComment}) => {
-
+import MyModal from "../UI/MyModal"
+const CommentList = ({isCommentsLoading, comments, deleteComment, setCommentModal, commentModal}) => {
     return (
+        <>
         <div className="p-8">
             <div className="p-2 w-max dark:text-gray-300 rounded-t-lg text-gray-800 text-xs bg-gray-200 dark:bg-gray-800">Комментарии</div>
             <div className="bg-gray-200 dark:bg-gray-800 shadow-md w-full p-4 flex flex-col space-y-2 rounded-tl-none rounded-lg">
@@ -24,12 +25,14 @@ const CommentList = ({isCommentsLoading, comments, deleteComment}) => {
                         </div>
                         <div className="absolute right-2 top-0">
                             <MyButton onClick={() => deleteComment(comment.id)}><i className="fal fa-trash-alt"></i></MyButton>
-                            <MyButton><i className="fal fa-pen-alt"></i></MyButton>
+                            <MyButton onClick={() => setCommentModal(true)}><i className="fal fa-pen-alt"></i></MyButton>
                         </div>
                     </div>
                 ))}
             </div>         
         </div>
+        <MyModal visible={commentModal} setVisible={setCommentModal}>123</MyModal>  
+        </>
     )
 }
 

@@ -6,8 +6,9 @@ import { getComments, delComment } from "../../API/CommentService"
 import { useParams } from "react-router-dom"
 import useHeader from "../../hooks/useHeader"
 
-const Comment = ({task_id}) => {
+const Comment = ({task_id, modal, setModal}) => {
     const [comments, setComments] = useState([])
+    const [commentModal, setCommentModal] = useState(false)
     const params = useParams()
     const header = useHeader()
 
@@ -27,7 +28,7 @@ const Comment = ({task_id}) => {
     return (
         <>
             <CommentForm task_id={task_id} comments={comments} fetchComments={fetchComments} setComments={setComments}/>
-            <CommentList isCommentsLoading={isCommentsLoading} comments={comments} deleteComment={deleteComment}/>
+            <CommentList commentModal={commentModal} setCommentModal={setCommentModal} isCommentsLoading={isCommentsLoading} comments={comments} deleteComment={deleteComment}/>
         </>
     )
 }

@@ -32,7 +32,7 @@ const CommentForm = ({comments, setComments, task_id}) => {
         <div className="px-8">
         <form className="bg-gray-200 dark:bg-gray-800 shadow-md relative w-full p-4 flex flex-col space-y-2 rounded-lg">
             <MyTextarea placeholder="Ваш комментарий..." value={comment.comment} onChange={e => setComment({...comment, comment: e.target.value})} rows="4"/>
-            <MyInput value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} />
+            <MyInput placeholder="ID задачи" value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} />
             <div className="w-max"><MyButton onClick={addNewComment}>Оставить комментарий</MyButton></div>
         </form>
     </div>
