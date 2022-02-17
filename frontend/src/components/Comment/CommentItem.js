@@ -48,7 +48,7 @@ const CommentItem = ({commentData, header, fetchComments, params, deleteComment,
         </div>
         <MyModal visible={commentModal} title="Изменение комментария" setVisible={setCommentModal} >
             <MyInput value={comment.comment} onChange={e => setComment({...comment, comment: e.target.value})} placeholder="Комментарий" type="text"/>
-            <MyInput disabled hidden="hidden" value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} placeholder="ID задачи" type="text"/>
+            <MyInput disabled hidden="hidden" value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} type="text"/>
             <MyButton onClick={changeComment}>Сохранить</MyButton>
         </MyModal> 
         </>
