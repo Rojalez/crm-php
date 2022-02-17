@@ -1,17 +1,18 @@
-import React, {useState} from "react";
+import React, {useState ,useEffect} from "react";
 import MyButton from "../UI/button/MyButton";
 import { useFetching } from "../../hooks/useFetching";
 import useHeader from "../../hooks/useHeader";
-import { postComment } from "../../API/TaskService";
+import { postComment } from "../../API/CommentService";
+import MyTextarea from "../UI/textarea/MyTextarea";
+import MyInput from "../UI/input/MyInput";
 const CommentForm = ({comments, setComments, task_id}) => {
     const [comment, setComment] = useState({
         task_id: '',
         comment: ''
     })
     const header = useHeader()
-
-    const [addComment, isAddCommentLoading] = useFetching(async () => {
-        const response = await postComment(task_id, comment, header)
+    const [addComment] = useFetching(async (data) => {
+        const response = await postComment(task_id, data, header)
         setComments([...comments, response.data])
     })
 
@@ -24,17 +25,14 @@ const CommentForm = ({comments, setComments, task_id}) => {
         setComment({
             task_id: '',
             comment: ''
-            
         });
     }
 
     return (
         <div className="px-8">
         <form className="bg-gray-200 dark:bg-gray-800 shadow-md relative w-full p-4 flex flex-col space-y-2 rounded-lg">
-            <textarea value={comment.comment} onChange={e => setComment({...comment, comment: e.target.value})} rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 rounded-lg border-0 focus:border-none focus:ring-0 focus:outline-none dark:placeholder-gray-400 dark:text-white" 
-                placeholder="Ваш комментарий...">
-            </textarea>
-            <input value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} />
+            <MyTextarea placeholder="Ваш комментарий..." value={comment.comment} onChange={e => setComment({...comment, comment: e.target.value})} rows="4"/>
+            <MyInput value={comment.task_id} onChange={e => setComment({...comment, task_id: e.target.value})} />
             <div className="w-max"><MyButton onClick={addNewComment}>Оставить комментарий</MyButton></div>
         </form>
     </div>

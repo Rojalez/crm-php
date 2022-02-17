@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {useFetching} from "../hooks/useFetching";
-import {getById, updateById, getComments, delComment} from "../API/TaskService";
+import {getById, updateById} from "../API/TaskService";
 import Moment from 'react-moment';
 import MyButton from "../components/UI/button/MyButton";
 import useHeader from '../hooks/useHeader';
@@ -11,7 +11,7 @@ import MyInput from "../components/UI/input/MyInput";
 import MySelect from '../components/UI/select/MySelect'
 import MyModal from "../components/UI/MyModal";
 import { useLocation } from 'react-router-dom'
-import CommentForm from "../components/Comment/CommentForm";
+import Comment from "../components/Comment/Comment";
 const TaskPage = () => {
     const location = useLocation()
     const users = location.state
@@ -24,7 +24,6 @@ const TaskPage = () => {
         executor_id: '',
         user_id: '' 
     })
-    const [comments, setComments] = useState([])
     const id = task.id
     const router = useNavigate()
     const header = useHeader()
@@ -39,18 +38,7 @@ const TaskPage = () => {
         setTask([...task, response.data])
         fetchTaskById(id)
     })
-    const [fetchComments, isCommentsLoading] = useFetching(async (id) => {
-        const response = await getComments(id, header)
-        setComments(response.data.comments)
-    })
-
-    const [deleteComment] = useFetching(async (id) => {
-        await delComment(id, header)
-        fetchComments(params.id);
-    })
-
-
-
+    
     const changeTask = (e) => {
         e.preventDefault();
         const changedTask = {
@@ -62,7 +50,6 @@ const TaskPage = () => {
 
     useEffect(() => {
         fetchTaskById(params.id)
-        fetchComments(params.id)
     }, [])
 
     return (
@@ -105,31 +92,7 @@ const TaskPage = () => {
                         </div>
                     </div>
                 </div>
-                <CommentForm task_id={id} comments={comments} fetchComments={fetchComments} setComments={setComments}/>
-                <div className="p-8">
-                    <div className="p-2 w-max dark:text-gray-300 rounded-t-lg text-gray-800 text-xs bg-gray-200 dark:bg-gray-800">Комментарии</div>
-                    <div className="bg-gray-200 dark:bg-gray-800 shadow-md w-full p-4 flex flex-col space-y-2 rounded-tl-none rounded-lg">
-                        {isCommentsLoading
-                            ? <Skeleton enableAnimation={false} count={5} className="h-full dark:bg-gray-700 animate-pulse"/>
-                            : !comments.length 
-                            ? <div className="dark:text-white text-xs text-gray-600 text-center py-16">Комментариев нет</div>
-                            : comments.map(comment => (
-                            <div key={comment.id} className="block relative p-2.5 w-full space-y-4 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 rounded-lg dark:text-white">
-                                <div className="flex flex-row text-xs space-x-2">
-                                    <span>{comment.id}</span>
-                                    <span><Moment format="HH:mm:ss DD.MM.YY">{comment.created_at}</Moment></span>
-                                </div>
-                                <div className="text-sm w-10/12">
-                                    {comment.comment}
-                                </div>
-                                <div className="absolute right-2 top-0">
-                                    <MyButton onClick={() => deleteComment(comment.id)}><i className="fal fa-trash-alt"></i></MyButton>
-                                    <MyButton><i className="fal fa-pen-alt"></i></MyButton>
-                                </div>
-                            </div>
-                        ))}
-                    </div>         
-                </div>
+                <Comment task_id={id}/>
             </>
         }
         <MyModal visible={modal} setVisible={setModal}>
@@ -137,9 +100,6 @@ const TaskPage = () => {
                 <MyInput value={task.title} type="text" onChange={e => setTask({...task, title: e.target.value})}/>
                 <MyInput value={task.text} type="text" onChange={e => setTask({...task, text: e.target.value})}/>
                 <MySelect value={task.status}  onChange={e => setTask({...task, status: e.target.value})} defaultValue="Выберите статус">
-                    {/* {users.map(user => (
-                        <option key={user.id} value={user.id}>{user.name}</option>
-                    ))} */}
                 </MySelect>
                 <MySelect value={task.executor_id}  onChange={e => setTask({...task, executor_id: e.target.value})} defaultValue="Выберите исполнителя">
                     {users.map(user => (
