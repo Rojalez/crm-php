@@ -25,7 +25,7 @@ class CreateOrUpdateCommentsRequest extends FormRequest
     {
         return [
                  'comment'=>'required',
-                 'task_id'=>'required|integer|max:11',
+                 'task_id'=>'required|integer',
         ];
     }
 }
