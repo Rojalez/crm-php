@@ -16,6 +16,7 @@ const TaskPage = () => {
     const [users, setUsers] = useState([])
     const params = useParams()
     const [modal, setModal] = useState(false)
+    const [subscribe, setSubscribe] = useState(false);
     const [task, setTask] = useState({
         title: '', 
         text: '',
@@ -52,9 +53,15 @@ const TaskPage = () => {
     }
 
     useEffect(() => {
+        setSubscribe(true)
         fetchTaskById(params.id)
         fetchUsers(users)
+        return () => setSubscribe(false)
     }, [])
+
+    if(!subscribe) {
+        return null;
+      }
 
     return (
         <>
@@ -100,15 +107,15 @@ const TaskPage = () => {
             </>
         }
         <MyModal visible={modal} title='Изменение данных таска' setVisible={setModal}>
-                <MyInput value={task.title} type="text" onChange={e => setTask({...task, title: e.target.value})}/>
-                <MyInput value={task.text} type="text" onChange={e => setTask({...task, text: e.target.value})}/>
-                <MyInput value={task.status} type="text" onChange={e => setTask({...task, status: e.target.value})}/>
-                <MySelect value={task.executor_id} onChange={e => setTask({...task, executor_id: e.target.value})} defaultValue="Выберите исполнителя">
-                    {users.map(user => (
-                        <option key={user.id} value={user.id}>{user.name}</option>
-                    ))}
-                </MySelect>
-                <MyButton onClick={changeTask}>Готово</MyButton>
+            <MyInput value={task.title} type="text" onChange={e => setTask({...task, title: e.target.value})}/>
+            <MyInput value={task.text} type="text" onChange={e => setTask({...task, text: e.target.value})}/>
+            <MyInput value={task.status} type="text" onChange={e => setTask({...task, status: e.target.value})}/>
+            <MySelect value={task.executor_id} onChange={e => setTask({...task, executor_id: e.target.value})} defaultValue="Выберите исполнителя">
+                {users.map(user => (
+                    <option key={user.id} value={user.id}>{user.name}</option>
+                ))}
+            </MySelect>
+            <MyButton onClick={changeTask}>Готово</MyButton>
         </MyModal>
         </>
     )

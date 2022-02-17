@@ -3,15 +3,16 @@ import Moment from "react-moment"
 import MyButton from "../UI/button/MyButton"
 import MyInput from "../UI/input/MyInput"
 import MyModal from "../UI/MyModal"
-import { updateCommentById, delComment } from "../../API/CommentService";
+import { updateCommentById } from "../../API/CommentService";
 import { useFetching } from "../../hooks/useFetching";
-const CommentItem = ({commentData, header, fetchComments, params}) => {
+const CommentItem = ({commentData, header, fetchComments, params, deleteComment, deleteCommentLoading}) => {
     const [commentModal, setCommentModal] = useState(false)
     const [comment, setComment] = useState({
         comment: commentData.comment,
         task_id: params.id
     })
     const id = commentData.id
+
     const [updateComment] = useFetching(async ( data) => {
         const response = await updateCommentById(id, header, data )
         setComment([...comment, response.data])
@@ -27,11 +28,6 @@ const CommentItem = ({commentData, header, fetchComments, params}) => {
         setCommentModal(false)
         fetchComments(params.id)
     }
-    
-    const [deleteComment, deleteCommentLoading] = useFetching(async (id) => {
-        await delComment(id, header)
-        fetchComments(params.id);
-    })
 
     return (
         <>
@@ -45,10 +41,7 @@ const CommentItem = ({commentData, header, fetchComments, params}) => {
             </div>
             <div className="absolute right-2 top-0">
                 <MyButton onClick={() => deleteComment(commentData.id)}>
-                    {deleteCommentLoading 
-                        ? <i className="fal fa-trash-alt animate-spin"></i>
-                        : <i className="fal fa-trash-alt"></i>
-                    }
+                    <i className="fal fa-trash-alt"></i>
                 </MyButton>
                 <MyButton onClick={() => setCommentModal(true)}><i className="fal fa-pen-alt"></i></MyButton>
             </div>
