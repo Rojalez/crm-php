@@ -3,11 +3,11 @@ import {Route, Routes} from 'react-router-dom';
 import useToken from "../hooks/useToken";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import { privateRoutes } from "../router/routes";
-
+import Tasks from "../pages/Tasks";
+import TaskPage from "../pages/TaskPage";
+import Profile from "../pages/Profile";
 const AppRouter = () => {
     const { token, setToken } = useToken();
-
     if(!token) {
       return(
       <>
@@ -18,14 +18,9 @@ const AppRouter = () => {
     }
     return (
         <Routes>
-            {privateRoutes.map(route =>
-                    <Route
-                        path={route.path}
-                        element={route.element}
-                        exact={route.exact}
-                        key={route.path}
-                    />
-            )}
+            <Route path='/tasks' element={<Tasks/>} exact={true}/>
+            <Route path='/tasks/:id' element={<TaskPage/>} exact={true}/>
+            <Route path='/profile' element={<Profile/>} exact={true}/>
         </Routes>
     )
 }

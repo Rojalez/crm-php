@@ -7,7 +7,9 @@ import { useFetching } from "../hooks/useFetching";
 import 'react-loading-skeleton/dist/skeleton.css'
 import useHeader from '../hooks/useHeader';
 const Tasks = () => {
+
     const [tasks, setTasks] = useState([]);
+
     const [users, setUsers] = useState([]);
     const [subscribe, setSubscribe] = useState(false);
     const header = useHeader()
@@ -29,7 +31,6 @@ const Tasks = () => {
         await delById(id, header)
         fetchTasks();
     })
-
     useEffect(() => {
         setSubscribe(true)
         fetchTasks(tasks)
