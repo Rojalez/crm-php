@@ -42,16 +42,16 @@ const Tasks = () => {
         fetchTasks();
     })
 
-    const handlePageClick = async (data) => {
+    const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
-        const tasksFormServer = await fetchPage(currentPage);
+        const tasksFormServer = fetchPage(currentPage);
         setTasks(tasksFormServer)
-        fetchPage(currentPage)
     }
 
     useEffect(() => {
         setSubscribe(true)
         fetchTasks(tasks)
+        fetchPage()
         fetchUsers(users)
         return () => setSubscribe(false)
     }, [])
@@ -77,8 +77,8 @@ const Tasks = () => {
                 previousLinkClassName={'py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}
                 nextLinkClassName={'py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}
                 breakLinkClassName={'py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}
-                activeLinkClassName={'py-2 px-3 text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'}
-
+                activeLinkClassName={'py-2 px-3 text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:border-gray-700 dark:bg-gray-700 cursor-not-allowed dark:hover:text-gray-400'}
+                disabledLinkClassName={'py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-white hover:text-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-400 cursor-not-allowed'}
             />
         </div>
     )
