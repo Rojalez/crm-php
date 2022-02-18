@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', 'Auth\PassportAuthController@register');
 Route::post('login', 'Auth\PassportAuthController@login');
 
+Route::middleware('auth:api')->get('/user', function(Request $request){
+    return $request->user();
+});
+
 Route::middleware('auth:api')->group(function () {
     Route::prefix('time-tracker')->group(function () {
         Route::get('user/total-times', 'TimeTracker\UserController@totalTimes');
@@ -29,6 +33,7 @@ Route::middleware('auth:api')->group(function () {
     });
 
 });
+
 
 
 

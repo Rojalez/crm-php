@@ -78,14 +78,11 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-
         return ['success'];
     }
 
     public function totalTimes()
     {
-       
-
         return new UserResource();
     }
 }

@@ -1,18 +1,18 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:8000/api/v1/time-tracker/"    
+const BASE_URL = "http://localhost:8000/api/v1/"    
         export async function getUsers(header) {
-            const response = await axios.get(`${BASE_URL}user`, {
+            const response = await axios.get(`${BASE_URL}time-tracker/user`, {
                 headers: header
             })
             return response.data
         }
 
-        export async function getUserById(header, id) {
-            const response = await axios.get(`${BASE_URL}user/${id}`, {
+        export async function getUser(header) {
+            const response = await axios.get(`${BASE_URL}user`, {
                 headers: header
             })
-            
+            // console.log(response.data)
             return response.data
         }
 

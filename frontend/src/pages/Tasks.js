@@ -6,7 +6,6 @@ import { getUsers } from "../API/UserService";
 import { useFetching } from "../hooks/useFetching";
 import 'react-loading-skeleton/dist/skeleton.css'
 import useHeader from '../hooks/useHeader';
-
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
     const [users, setUsers] = useState([]);
