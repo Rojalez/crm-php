@@ -42,6 +42,13 @@ const Tasks = () => {
         fetchTasks();
     })
 
+    const handlePageClick = async (data) => {
+        let currentPage = data.selected + 1;
+        const tasksFormServer = await fetchPage(currentPage);
+        setTasks(tasksFormServer)
+        fetchPage(currentPage)
+    }
+
     useEffect(() => {
         setSubscribe(true)
         fetchTasks(tasks)
@@ -53,12 +60,7 @@ const Tasks = () => {
         return null;
       }
     
-    const handlePageClick = async (data) => {
-        let currentPage = data.selected + 1;
-        const tasksFormServer = await fetchPage(currentPage);
-        setTasks(tasksFormServer)
-        fetchPage(currentPage)
-    }
+
 
     return (
         <div className="p-4">
