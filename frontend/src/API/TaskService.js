@@ -2,12 +2,18 @@ import axios from "axios"
 
 const BASE_URL = "http://localhost:8000/api/v1/time-tracker/"
        export async function getAll(header) {
-            const response = await axios.get(`${BASE_URL}task`, {
+            const response = await axios.get(`${BASE_URL}task?page=1`, {
                 headers: header 
             })
             return response.data
         }
-       
+        export async function getPage(currentPage, header) {
+            const response = await axios.get(`${BASE_URL}task?page=${currentPage}`, {
+                headers: header 
+            })
+            return response.data
+        }
+
         export async function postTask(data, header) {
             const response = await fetch(`${BASE_URL}task`, {
                 method: 'POST',

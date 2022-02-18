@@ -1,11 +1,12 @@
 import React from "react";
 import TaskItem from "./TaskItem";
-const TaskList = ({tasks, delTask, isDeleting, users, isTasksLoading}) => {
+
+const TaskList = ({tasks, delTask, isDeleting, users, isTasksLoading, isPageLoading}) => {
     return (  
         <div className="inline-block py-2 min-w-full">
             <div className="overflow-hidden dark:bg-gray-800 bg-gray-100 shadow-md sm:rounded-lg">
-            {!tasks.length 
-                ?   <div className="dark:text-white text-xs text-gray-600 text-center py-16">{isTasksLoading ? <i className="fal fa-spinner-third animate-spin"></i> : "Задач пока нет"}</div>
+            {!tasks?.length 
+                ?   <div className="dark:text-white text-xs text-gray-600 text-center py-16">{isTasksLoading || isPageLoading ? <i className="fal fa-spinner-third animate-spin"></i> : "Задач пока нет"}</div>
                 :   <table className="min-w-full">
                         <thead className="bg-gray-100 dark:bg-gray-700">
                             <tr>

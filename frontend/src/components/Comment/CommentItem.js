@@ -5,7 +5,7 @@ import MyInput from "../UI/input/MyInput"
 import MyModal from "../UI/MyModal"
 import { updateCommentById } from "../../API/CommentService";
 import { useFetching } from "../../hooks/useFetching";
-const CommentItem = ({commentData, header, fetchComments, params, deleteComment, deleteCommentLoading}) => {
+const CommentItem = ({commentData, header, fetchComments, params, deleteComment}) => {
     const [commentModal, setCommentModal] = useState(false)
     const [comment, setComment] = useState({
         comment: commentData.comment,
@@ -18,7 +18,6 @@ const CommentItem = ({commentData, header, fetchComments, params, deleteComment,
         setComment([...comment, response.data])
         fetchComments(params.id)
     })
-
     const changeComment = (e) => {
         e.preventDefault();
         const changedComment = {

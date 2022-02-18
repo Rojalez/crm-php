@@ -51,7 +51,6 @@ const TaskPage = () => {
         updateTaskById(changedTask)
         setModal(false)
     }
-
     useEffect(() => {
         setSubscribe(true)
         fetchTaskById(params.id)
