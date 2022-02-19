@@ -13,7 +13,7 @@ const CommentList = ({isCommentsLoading, params, comments, header, fetchComments
                     : !comments.length 
                     ? <div className="dark:text-white text-xs text-gray-600 text-center py-16">Комментариев нет</div>
                     : comments.map(commentData => (
-                        <CommentItem key={commentData.id} params={params} fetchComments={fetchComments} header={header} commentData={commentData} deleteComment={deleteComment} deleteCommentLoading={deleteCommentLoading}/>
+                        <CommentItem  key={commentData.id} params={params} fetchComments={fetchComments} header={header} commentData={commentData} deleteComment={deleteComment} deleteCommentLoading={deleteCommentLoading}/>
                     ))}
             </div>         
         </div> 

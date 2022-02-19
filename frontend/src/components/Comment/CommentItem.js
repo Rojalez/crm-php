@@ -12,11 +12,10 @@ const CommentItem = ({commentData, header, fetchComments, params, deleteComment}
         task_id: params.id
     })
     const id = commentData.id
-
-    const [updateComment] = useFetching(async ( data) => {
-        const response = await updateCommentById(id, header, data )
+    const [updateComment] = useFetching((data) => {
+        const response = updateCommentById(id, header, data )
         setComment([...comment, response.data])
-        fetchComments(params.id)
+        // fetchComments(params.id)
     })
     const changeComment = (e) => {
         e.preventDefault();

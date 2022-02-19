@@ -18,8 +18,8 @@ export async function postComment(_id, data, header) {
     return response.json()
 }
 
-export async function updateCommentById(id, header, data) {
-    const response = await axios.put(`${BASE_URL}comment/${id}`, data, {
+export function updateCommentById(id, header, data) {
+    const response = axios.put(`${BASE_URL}comment/${id}`, data, {
         headers: header,
         body: JSON.stringify(data)
     })

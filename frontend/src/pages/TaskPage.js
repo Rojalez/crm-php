@@ -92,7 +92,7 @@ const TaskPage = () => {
                         }
                         </div>
                         <div className="absolute bottom-0 w-full flex flex-row justify-between items-center text-xs bg-gray-200 dark:bg-gray-800 rounded-b-lg px-3 py-3 -mx-2 dark:text-white text-gray-700">
-                            <MyButton onClick={() => router('/')}><i className="fas fa-caret-left mr-2"></i>Назад</MyButton>
+                            <MyButton onClick={() => router('/tasks')}><i className="fas fa-caret-left mr-2"></i>Назад</MyButton>
                             {isLoading
                                 ?   <Skeleton enableAnimation={false} width={100} className="dark:bg-gray-700 animate-pulse"/>
                                 :   <div className="flex flex-col space-y-2">
