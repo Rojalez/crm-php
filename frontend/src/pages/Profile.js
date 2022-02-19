@@ -7,7 +7,6 @@ import Moment from "react-moment";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 const Profile = () => {
-  const [tasks, setTasks] = useState([])
   const [user, setUser] = useState([]);
   const id = user.id
   const header = useHeader();
@@ -16,16 +15,13 @@ const Profile = () => {
     const response = await getUser(header);
     setUser(response);
   });
-  const [fetchTasks, isTasksLoading] = useFetching(async () => {
-    const response = await getAll(header)
-    setTasks(response.data)
-})
+
   useEffect(() => {
     setSubscribe(true);
     fetchUser(user);
-    fetchTasks(tasks)
     return () => setSubscribe(false);
   },[]);
+
   if (!subscribe) {
     return null;
   }
@@ -71,7 +67,7 @@ const Profile = () => {
           )}
         </div>
       </div>
-      <div className="p-4 mx-auto max-w-full bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+      {/* <div className="p-4 mx-auto max-w-full bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
       {tasks.map(task => (
         <div key={task.id} className="flow-root">
           <ul className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -93,7 +89,7 @@ const Profile = () => {
           </ul>
         </div>
       ))}
-      </div>
+      </div> */}
     </div>
   );
 };
